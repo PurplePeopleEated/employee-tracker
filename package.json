@@ -1,0 +1,11 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "cli app to manage a company's employee database",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "PurplePeopleEated",
+  "license": "MIT"
+}
