@@ -16,5 +16,31 @@ connection.connect((error) => {
   }
 });
 
-
+const prompt = inquirer.createPromptModule();
 // TODO: create inquirer prompts
+// Runs inquirer prompts
+const main = async () => {
+  try {
+    const answers = await prompt([
+      // * Main Menu Options *
+      {
+        type: 'list',
+        name: 'option',
+        message: 'Select an option from the list',
+        choices: [
+          'View all departments',
+          'View all roles',
+          'View all employees',
+          'Add a department',
+          'Add a role',
+          'Add an employee',
+          'Update employee role',
+          'Close'
+        ],
+        pageSize: 8
+      }
+    ]);
+  } catch (error) {
+    console.error('Error with selection', error);
+  }
+};
