@@ -98,14 +98,9 @@ const main = async () => {
                 type: 'input',
                 name: 'role',
                 message: 'What is their role?'
-              },
-              {
-                type: 'input',
-                name: 'manager',
-                message: 'Who is their manager?'
               }
             ])
-            addEmployee(newEmployee.first_name, newEmployee.last_name, newEmployee.role, newEmployee.manager);
+            addEmployee(newEmployee.first_name, newEmployee.last_name, newEmployee.role);
             break;
           
           case 'Update employee role':
