@@ -1,7 +1,7 @@
 import connection from './config/connect.js';
 import inquirer from 'inquirer';
 // Import functions
-import { getDepartments, getRoles } from './helpers/queries.js';
+import { getDepartments, getRoles, getEmployees, addDepartment, addRole, addEmployee, updateRole } from './helpers/queries.js';
 
 // TODO: connect to database
 
