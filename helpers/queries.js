@@ -32,3 +32,22 @@ export async function getEmployees() {
   }
 };
 
+// * Add *
+export async function addDepartment(departmentName) {
+  if (!departmentName) {
+    console.log('No department name provided.');
+    return;
+  }
+
+  try {
+    const [result] = await db.promise().execute(
+      'INSERT INTO department (name) VALUES (?)',
+      [departmentName]
+    );
+
+    console.log(`Added new department with id: ${result.insertId}`);
+    main();
+  } catch (error) {
+    console.error('Error adding department:', error);
+  }
+};
