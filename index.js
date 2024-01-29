@@ -4,7 +4,6 @@ import inquirer from 'inquirer';
 import { getDepartments, getRoles, getEmployees, addDepartment, addRole, addEmployee, updateRole } from './helpers/queries.js';
 
 // Connect to database
-
 connection.connect((error) => {
   if (error) {
     console.error('Error connecting to database', error);
@@ -70,53 +69,17 @@ const main = async () => {
     
           case 'Add a role':
             console.log('Choice: add a role');
-            let roleName = await prompt([
-              {
-                type: 'input',
-                name: 'name',
-                message: 'What is the name of the new role?'
-              }
-            ])
-            addRole(roleName.name);
+            addRole();
             break;
     
           case 'Add an employee':
             console.log('Choice: add an employee');
-            let newEmployee = await prompt([
-              {
-                type: 'input',
-                name: 'first_name',
-                message: 'What is the first name?'
-              },
-              {
-                type: 'input',
-                name: 'last_name',
-                message: 'What is the last name?'
-              },
-              {
-                type: 'input',
-                name: 'role',
-                message: 'What is their role?'
-              }
-            ])
-            addEmployee(newEmployee.first_name, newEmployee.last_name, newEmployee.role);
+            addEmployee();
             break;
           
           case 'Update employee role':
             console.log('Choice: update employee role');
-            let updateCurrent = await prompt([
-              {
-                type: 'input',
-                name: 'id',
-                message: `What is the employee's id?`
-              },
-              {
-                type: 'input',
-                name: 'role_id',
-                message: 'What is the id of their new role?'
-              },
-            ])
-            updateRole(parseInt(updateCurrent.id), parseInt(updateCurrent.role_id));
+            updateRole();
             break;
     
           default:
