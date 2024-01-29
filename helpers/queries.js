@@ -164,4 +164,4 @@ export async function updateRole() {
     // Return to the main menu
     main();
   }
-}
+};
