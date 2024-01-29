@@ -51,3 +51,24 @@ export async function addDepartment(departmentName) {
     console.error('Error adding department:', error);
   }
 };
+
+// Create a prompt module with inquirer
+const prompt = inquirer.createPromptModule();
+
+export async function addRole() {
+  try {
+    // Fetch existing departments to allow the user to select one
+    const [departments] = await db.promise().query('SELECT id, name FROM department');
+
+    if (departments.length === 0) {
+      console.log('No departments found. Please add a department first.');
+      return main();
+    }
+  } catch (error) {
+    console.error('Error adding role:', error);
+  } finally {
+    // Return to the main menu
+    main();
+  }
+};
+
