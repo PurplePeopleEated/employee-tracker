@@ -90,3 +90,5 @@ const main = async () => {
     console.error('Error with selection', error);
   }
 };
+
+export default main;
