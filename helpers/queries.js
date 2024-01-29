@@ -105,41 +105,42 @@ export async function addRole() {
 
 export async function addEmployee() {
   try {
-    // Prompt for new employee details
-    const employeeDetails = await prompt([
-      {
-        type: 'input',
-        name: 'firstName',
-        message: 'What is the first name of the employee?'
-      },
-      {
-        type: 'input',
-        name: 'lastName',
-        message: 'What is the last name of the employee?'
-      },
-      {
-        type: 'list',
-        name: 'roleId',
-        message: 'What is the role of the employee?',
-        choices: roles.map(role => ({ name: role.title, value: role.id })),
-        pageSize: roles.length
-      },
-      {
-        type: 'list',
-        name: 'managerId',
-        message: 'Who is the manager of the employee?',
-        choices: managers.map(manager => ({ name: manager.name, value: manager.id })).concat([{ name: 'None', value: null }]),
-        pageSize: managers.length
-      }
-    ]);
+    const newEmployeeDetails = await prompt([
+    {
+      type: 'input',
+      name: 'firstName',
+      message: 'What is the first name of the employee?',
+      validate: input => !!input.trim() || 'First name cannot be empty.'
+    },
+    {
+      type: 'input',
+      name: 'lastName',
+      message: 'What is the last name of the employee?',
+      validate: input => !!input.trim() || 'Last name cannot be empty.'
+    },
+    {
+      type: 'input',
+      name: 'roleId',
+      message: 'What is the role ID for the employee?',
+      validate: input => !isNaN(parseInt(input, 10)) || 'Please enter a valid role ID.'
+    },
+    {
+      type: 'input',
+      name: 'managerId',
+      message: 'What is the manager ID for the employee? (Leave blank if none)',
+      validate: input => input === '' || !isNaN(parseInt(input, 10)) || 'Please enter a valid manager ID or leave blank.',
+      default: null
+    }
+  ]);
 
-    // Insert the new employee into the database
-    const [result] = await db.promise().execute(
-      'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
-      [employeeDetails.firstName, employeeDetails.lastName, employeeDetails.roleId, employeeDetails.managerId]
-    );
+  const managerId = newEmployeeDetails.managerId !== '' ? parseInt(newEmployeeDetails.managerId, 10) : null;
 
-    console.log(`Added new employee with id: ${result.insertId}`);
+  const [employeeResult] = await db.promise().execute(
+    'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
+    [newEmployeeDetails.firstName, newEmployeeDetails.lastName, newEmployeeDetails.roleId, managerId]
+  );
+
+  console.log(`Added new employee with id: ${employeeResult.insertId}`);
   } catch (error) {
     console.error('Error adding employee:', error);
   } finally {
