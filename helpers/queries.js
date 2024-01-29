@@ -133,6 +133,31 @@ export async function updateRole() {
       return main();
     }
 
+    // Prompt user for the employee and new role details
+    const updateDetails = await prompt([
+      {
+        type: 'list',
+        name: 'employeeId',
+        message: 'Which employee\'s role do you want to update?',
+        choices: employees.map(employee => ({ name: employee.name, value: employee.id })),
+        pageSize: employees.length
+      },
+      {
+        type: 'list',
+        name: 'roleId',
+        message: 'Which role do you want to assign to the selected employee?',
+        choices: roles.map(role => ({ name: role.title, value: role.id })),
+        pageSize: roles.length
+      }
+    ]);
+
+    // Update the employee's role in the database
+    const [result] = await db.promise().execute(
+      'UPDATE employee SET role_id = ? WHERE id = ?',
+      [updateDetails.roleId, updateDetails.employeeId]
+    );
+
+    console.log(`Updated employee's role with id: ${updateDetails.employeeId}`);
   } catch (error) {
     console.error('Error updating employee role:', error);
   } finally {
