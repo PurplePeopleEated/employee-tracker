@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 // Import functions
 import { getDepartments, getRoles, getEmployees, addDepartment, addRole, addEmployee, updateRole } from './helpers/queries.js';
 
-// TODO: connect to database
+// Connect to database
 
 connection.connect((error) => {
   if (error) {
@@ -17,7 +17,6 @@ connection.connect((error) => {
 });
 
 const prompt = inquirer.createPromptModule();
-// TODO: create inquirer prompts
 // Runs inquirer prompts
 const main = async () => {
   try {
