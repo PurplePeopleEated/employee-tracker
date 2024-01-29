@@ -12,3 +12,13 @@ export async function getDepartments() {
     console.error('Error fetching departments:', error);
   }
 };
+
+export async function getRoles() {
+  try {
+    const [roles] = await db.promise().query('SELECT * FROM role');
+    console.log('Roles:', roles);
+    main();
+  } catch (error) {
+    console.error('Error fetching roles:', error);
+  }
+};
