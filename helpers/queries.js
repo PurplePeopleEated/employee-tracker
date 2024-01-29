@@ -116,3 +116,27 @@ export async function addEmployee() {
     main();
   }
 };
+
+export async function updateRole() {
+  try {
+    // Fetch existing roles and employees to allow the user to select one for updating
+    const [roles] = await db.promise().query('SELECT id, title FROM role');
+    const [employees] = await db.promise().query('SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee');
+
+    if (roles.length === 0) {
+      console.log('No roles found. Please add a role first.');
+      return main();
+    }
+
+    if (employees.length === 0) {
+      console.log('No employees found. Please add an employee first.');
+      return main();
+    }
+
+  } catch (error) {
+    console.error('Error updating employee role:', error);
+  } finally {
+    // Return to the main menu
+    main();
+  }
+}
