@@ -64,6 +64,37 @@ export async function addRole() {
       console.log('No departments found. Please add a department first.');
       return main();
     }
+    // Prompt user for the new role details
+    const newRoleDetails = await prompt([
+      {
+        type: 'input',
+        name: 'title',
+        message: 'What is the title of the new role?',
+        validate: input => !!input || 'Please enter a valid role title.'
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary for the new role?',
+        validate: input => !isNaN(parseFloat(input)) || 'Please enter a valid salary.'
+      },
+      {
+        type: 'list',
+        name: 'departmentId',
+        message: 'Which department does the new role belong to?',
+        choices: departments.map(department => ({ name: department.name, value: department.id })),
+        pageSize: departments.length
+      }
+    ]);
+
+  // Insert the new role into the database
+  const [roleResult] = await db.promise().execute(
+    'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)',
+    [newRoleDetails.title, newRoleDetails.salary, newRoleDetails.departmentId]
+  );
+
+  console.log(`Added new role with id: ${roleResult.insertId}`);
+
   } catch (error) {
     console.error('Error adding role:', error);
   } finally {
