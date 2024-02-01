@@ -5,10 +5,19 @@
 This command-line interface application is for an employer to keep track of their departments, roles, and employees.
 
 ## Table of Contents
+[Install](#install)
 [Usage](#usage)
 [License](#license)
 [Contributing](#contributing)
 [Questions](#questions)
+
+## Install
+
+1. Be sure you have MySQL installed on your local machine. Start mysql up and run both:
+  - `source db/schema.sql`
+  - `source db/seeds.sql`
+2. Use `npm i` in the root directory to install the required dependencies.
+3. `npm start` will start the application in your command-line interface!
 
 ## Usage
 
